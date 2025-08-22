@@ -1,10 +1,11 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../enviroments/enviroments';
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {
   private http = inject(HttpClient);
-  private base = '/api';
+  private base = environment.apiBaseUrl;
 
   obtenerPartido(id: number) {
     return this.http.get<any>(`${this.base}/partidos/${id}`);
@@ -53,7 +54,7 @@ export class ApiService {
     );
   }
   crearEquipo(body: { nombre: string; color?: string; jugadores: { numero?: number; nombre: string }[] }) {
-    return this.http.post('/api/equipos', body);
+    return this.http.post(`${this.base}/equipos`, body);
   }
 
   obtenerPosiciones() {
